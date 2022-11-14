@@ -1,0 +1,18 @@
+---
+- host global
+  name: "NTP service installation"
+
+  tasks:
+    - name: "Ensure package is installed"
+      yum:
+       name:
+         - ntp
+       state: present
+
+    - name: "Ensure service running after reboot also"
+      systemd:
+       name: ntpd
+       state: started
+       enabled: True
+...
+

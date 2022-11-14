@@ -1,0 +1,16 @@
+---
+- hosts: global
+  name: "NTP service installation"
+
+  tasks:
+    - name: "Ensure package is installed"
+      ansible.builtin.package:
+        name: ntp
+        state: absent
+
+    - name: "Ensure service running after reboot also"
+      systemd:
+       name: ntp
+       state: started
+       enabled: True
+...
