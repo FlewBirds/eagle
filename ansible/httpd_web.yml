@@ -1,0 +1,77 @@
+---
+- name: apache web servers
+  hosts: global
+
+  tasks:
+  - name: install system tools
+    yum: name=wget state=latest
+    yum: name=vim state=present
+  - name: install httpd servers
+    yum: name=httpd state=present
+  - name: enable httpd service
+    systemd: name=httpd state=started enabled=true
+
+- name: backup httpdconf and update config
+  hosts: bitcoin_web
+  tasks:
+  - copy:
+      src=httpd_conf_bitcoin
+      dest=/etc/httpd/conf/httpd.conf
+      backup=true mode='u=rwx,g=rx,o=r'
+      owner=apache
+  - unarchive:
+      src=bitcypo.zip
+      dest=/opt/
+      mode='u=rwx,g=rx,o=r'
+      owner=apache
+
+
+- name: backup httpdconf and update config
+  hosts: decorative_web
+  tasks:
+  - copy: 
+      src=httpd_conf_bitcoin 
+      dest=/etc/httpd/conf/httpd.conf 
+      backup=true mode='u=rwx,g=rx,o=r' 
+      owner=apache
+  - unarchive: 
+      src=evonyee.zip 
+      dest=/opt/ mode='u=rwx,g=rx,o=r' 
+      owner=apache
+
+- name: backup httpdconf and update config
+  hosts: seo_web
+  tasks:
+  - copy: 
+      src=httpd_conf_bitcoin 
+      dest=/etc/httpd/conf/httpd.conf 
+      backup=true mode='u=rwx,g=rx,o=r' 
+      owner=apache
+  - unarchive: 
+      src=seo-dream.zip 
+      dest=/opt/ 
+      mode='u=rwx,g=rx,o=r' 
+      owner=apache
+
+
+
+
+
+
+# $ansible localhost -m yum -a "name=httpd state=present enabled=true" -b
+
+# $ansible localhost -m systemd -a "name=httpd enabled=true" -b
+
+# $ansible localhost -m systemd -a "name=httpd state=started enabled=true" -b
+
+
+
+
+# $ansible localhost -m yum -a "name=httpd state=present enabled=true" -b
+
+# $ansible localhost -m systemd -a "name=httpd enabled=true" -b
+
+# $ansible localhost -m systemd -a "name=httpd state=started enabled=true" -b
+
+
+
