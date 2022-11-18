@@ -1,7 +1,9 @@
+[ec2-user@ip-10-0-25-151 ~]$ cat httpd_web.yml
+#!/usr/bin/ansible-playbook
 ---
 - name: apache web servers
   hosts: global
-
+  #become: true
   tasks:
   - name: install system tools
     yum: name=wget state=latest
@@ -19,39 +21,83 @@
       dest=/etc/httpd/conf/httpd.conf
       backup=true mode='u=rwx,g=rx,o=r'
       owner=apache
+      group=apache
+    notify: 
+    - Restart apache
   - unarchive:
       src=bitcypo.zip
       dest=/opt/
       mode='u=rwx,g=rx,o=r'
       owner=apache
+      group=apache
+    notify: 
+    - Restart apache
+  handlers:
+  - name: Restart apache
+    ansible.builtin.service:
+      name: httpd
+      state: restarted
+#  - systemd: name=httpd state=restarted
 
 
 - name: backup httpdconf and update config
   hosts: decorative_web
   tasks:
   - copy: 
-      src=httpd_conf_bitcoin 
+      src=httpd_conf_decorative 
       dest=/etc/httpd/conf/httpd.conf 
       backup=true mode='u=rwx,g=rx,o=r' 
       owner=apache
+      group=apache
+    notify: 
+    - Restart apache
   - unarchive: 
       src=evonyee.zip 
       dest=/opt/ mode='u=rwx,g=rx,o=r' 
       owner=apache
+      group=apache
+    notify: 
+    - Restart apache
+  handlers:
+  - name: Restart apache
+    ansible.builtin.service:
+      name: httpd
+      state: restarted
+#  - systemd: name=httpd state=restarted
 
 - name: backup httpdconf and update config
   hosts: seo_web
   tasks:
   - copy: 
-      src=httpd_conf_bitcoin 
+      src=httpd_conf_seo 
       dest=/etc/httpd/conf/httpd.conf 
-      backup=true mode='u=rwx,g=rx,o=r' 
+      backup=true mode='u=rwx,g=rx,o=rx' 
       owner=apache
+      group=apache
+    notify: 
+    - Restart apache
   - unarchive: 
       src=seo-dream.zip 
       dest=/opt/ 
-      mode='u=rwx,g=rx,o=r' 
+      mode='u=rwx,g=rx,o=rx' 
       owner=apache
+      group=apache
+    notify: 
+    - Restart apache
+  handlers:
+  - name: Restart apache
+    ansible.builtin.service:
+      name: httpd
+      state: restarted
+#  - systemd: name=httpd state=restarted
+
+#handlers:
+#  - name: Restart apache
+#    ansible.builtin.service:
+#      name: httpd
+#      state: restarted
+  
+
 
 
 
@@ -72,6 +118,3 @@
 # $ansible localhost -m systemd -a "name=httpd enabled=true" -b
 
 # $ansible localhost -m systemd -a "name=httpd state=started enabled=true" -b
-
-
-

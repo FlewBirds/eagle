@@ -8,12 +8,12 @@ ServerAdmin root@localhost
     AllowOverride none
     Require all denied
 </Directory>
-DocumentRoot "/var/www/html"
-<Directory "/var/www">
+DocumentRoot "/opt/evonyee"
+<Directory "/opt/">
     AllowOverride None
     Require all granted
 </Directory>
-<Directory "/var/www/html">
+<Directory "/opt/evonyee">
     Options Indexes FollowSymLinks
     AllowOverride None
     Require all granted
