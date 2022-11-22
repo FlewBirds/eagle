@@ -1,0 +1,27 @@
+---
+- name: play tasks using when condition to math the os distribution
+  hosts: all
+  tasks:
+   - block:
+     - name: isntalling httpd for redhat os family
+       yum:
+         name: httpd
+         state: present
+     - name: starting httpd service for redhat os family
+       ansible.builtin.systemd:
+        name: httpd
+        state: started
+     when: ansible_os_family=="RedHat"
+     become: yes
+
+   - block:
+     - name: installing httpd for ubuntu os family
+       ansible.builtin.apt:
+        name: apache2
+        state: present
+     - name: starting httpd service for debian family
+       ansible.builtin.systemd:
+        name: apache2
+        state: started
+     when: ansible_os_family=="Debian"
+     become: yes

@@ -1,8 +1,10 @@
 [ec2-user@ip-10-0-25-56 ~]$ cat httpd_web.yml 
 ---
+# tags: global, bitcoin, decorative, seo
 - name: apache web servers
   hosts: global
   #become: true
+  tags: global
   tasks:
 
   - name: install system tools
@@ -16,10 +18,11 @@
     debug:
      msg: "Completed installation of common tools"
 
-
-
 - name: backup httpdconf and update config
   hosts: bitcoin_web
+  tags: 
+   - bitcoin
+   - webapp
   tasks:
   - copy:
       src=httpd_conf_bitcoin
@@ -55,6 +58,9 @@
 
 - name: backup httpdconf and update config
   hosts: decorative_web
+  tags: 
+   - decorative
+   - webapp
   tasks:
   - copy: 
       src=httpd_conf_decorative 
@@ -84,6 +90,9 @@
 
 - name: backup httpdconf and update config
   hosts: seo_web
+  tags: 
+   - seo
+   - webapp
   tasks:
   - copy: 
       src=httpd_conf_seo 

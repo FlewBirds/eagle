@@ -1,0 +1,24 @@
+---
+- name: Run tasks using tags
+  hosts: localhost
+  gather_facts: no
+  tasks:
+    - debug:
+        msg: "this is first task"
+    - shell: "service httpd restart"
+    tags: first
+    - debug:
+        msg: "this is second task"
+      tags: second
+    - debug:
+        msg: "this is third task"
+      tags: third
+    - debug:
+        msg: "this is fourth task"
+      tags: four
+    - debug:
+        msg: "this is fifth task"
+      tags: five
+    - debug:
+        msg: "this is sixth task"
+      tags: six
