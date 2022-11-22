@@ -17,3 +17,6 @@ check syntax check
 Syntax OK
 
 $ansible localhost -m copy -a "src=/tmp/custom_httpd.conf dest=/etc/httpd/conf/httpd.conf backup=true mode='u=rwx,g=rx,o=r' owner=apache group=apache" -b
+
+
+

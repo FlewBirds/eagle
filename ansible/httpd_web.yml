@@ -1,10 +1,10 @@
-[ec2-user@ip-10-0-25-151 ~]$ cat httpd_web.yml
-#!/usr/bin/ansible-playbook
+[ec2-user@ip-10-0-25-56 ~]$ cat httpd_web.yml 
 ---
 - name: apache web servers
   hosts: global
   #become: true
   tasks:
+
   - name: install system tools
     yum: name=wget state=latest
     yum: name=vim state=present
@@ -12,6 +12,11 @@
     yum: name=httpd state=present
   - name: enable httpd service
     systemd: name=httpd state=started enabled=true
+  - name: "Print Status"
+    debug:
+     msg: "Completed installation of common tools"
+
+
 
 - name: backup httpdconf and update config
   hosts: bitcoin_web
@@ -30,15 +35,23 @@
       mode='u=rwx,g=rx,o=r'
       owner=apache
       group=apache
-    notify: 
-    - Restart apache
-  handlers:
-  - name: Restart apache
-    ansible.builtin.service:
-      name: httpd
-      state: restarted
+      #    notify: 
+      # - Restart apache
+#  handlers:
+#  - name: Restart apache
+#    ansible.builtin.service:
+#      name: httpd
+#      state: restarted
 #  - systemd: name=httpd state=restarted
+#  - name: "Print Status"
+#    debug:
+#     msg: "Completed installation and configuration of httpd"
 
+  - name: Print hostname
+    shell: hostname
+    register: hostname_cmd
+  - debug:
+     var: hostname_cmd.stdout
 
 - name: backup httpdconf and update config
   hosts: decorative_web
@@ -64,6 +77,10 @@
       name: httpd
       state: restarted
 #  - systemd: name=httpd state=restarted
+  - name: "Print Status"
+    debug:
+     msg: "Completed installation and configuration of httpd"
+
 
 - name: backup httpdconf and update config
   hosts: seo_web
@@ -90,6 +107,10 @@
       name: httpd
       state: restarted
 #  - systemd: name=httpd state=restarted
+  - name: "Print Status"
+    debug:
+     msg: "Completed installation and configuration of httpd"
+
 
 #handlers:
 #  - name: Restart apache
