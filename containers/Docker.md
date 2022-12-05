@@ -75,4 +75,55 @@ docker compose
 
   ###################################
 
-  
+  https://hub.docker.com/_/httpd
+
+   1181  docker build -t evonyee:add_v4 .
+ 1182  docker run -d -p80:80 evonyee:add_v4 
+ 1183  docker logs
+ 1184  docker ps
+ 1185  docker ps -a
+ 1186  docker logs ceeaaf842be9
+ 1187  docker images
+ 1188  docker run -it --entrypoint=/bin/bash 30710522400e
+ 1189  docker ps
+ 1190  docker build -t evonyee:add_v4 .
+ 1191  docker run -d -p80:80 evonyee:add_v4 
+ 1192  docker ps
+ 1193  docker logs ec48d3b08e1e
+ 1194  docker logs ec48d3b08e1e
+ 1195  docker logs ec48d3b08e1e
+ 1196  docker logs -f ec48d3b08e1e
+ 1118  scooby
+ 1119  docker ps
+ 1120  docker ps
+ 1121  docker inspect
+ 1122  docker inspect evonyee
+ 1123  docker inspect e376baec980e
+ 1124  docker exec -it e376baec980e /bin/bash
+ 1125  docker ps
+ 1126  docker commit e376baec980e -t evonyee:v2
+ 1127  docker commit e376baec980e evonyee:v2
+ 1128  docker images
+ 1129  docker ps
+ 1130  docker run -it -p80:80 evonyee:v2 
+ 1131  docker run -it -p80:80 evonyee:v2 
+ 1132  docker ps
+ 1133  ls
+ 1119  wget https://www.free-css.com/assets/files/free-css-templates/download/page285/evonyee.zip
+ 1120  ls
+ 1121  unzip evonyee.zip
+ 1122  ls
+ 1123  ls
+ 1124  cd evonyee
+ 1125  ls
+ 1126  ls
+ 1127  cd ..
+ 1128  ls
+ 1129  vi Dockerfile
+ 1130  vi Dockerfile
+ 1131  docker build -t evonyee:v1 .
+ 1132  docker build -t evonyee:v1 .
+ 1133  docker images
+ 1134  docker run -it evonyee:v1
+ 
+
