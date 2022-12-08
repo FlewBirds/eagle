@@ -1,0 +1,38 @@
+version: '3.7'
+
+services:
+
+  nginx-proxy:
+    container_name: nginx_revproxy
+    build: nginx_revproxy
+    depends_on:
+      - web_decorative
+      - web_seo
+    ports:
+      - 80:80
+    networks:
+      - proxy_network
+      - web_network
+
+  web_decorative:
+    container_name: decorative
+    image: evonyee:add_v4
+    #ports:
+    #  - "80"
+    networks:
+      - web_network
+
+  web_seo:
+    container_name: seo
+    image: seo:v2
+   #ports:
+   #  - "80"
+    networks:
+      - web_network
+
+networks:
+  web_network:
+  proxy_network:
+
+volumes:
+  
