@@ -20,9 +20,13 @@ pipeline {
                 // To run Maven on a Windows agent, use
                 // bat "mvn -Dmaven.test.failure.ignore=true clean package"
             }
-       node("linux") {
-       timeout(unit: 'SECONDS', time: 40) {
+  
+       
             stage('maven build on remote agent'){
+            timeout(unit: 'SECONDS', time: 40) {
+            agent { 
+            label 'linux'
+            }
                steps {     
                         steps {
                 // Get some code from a GitHub repository
