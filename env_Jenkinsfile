@@ -29,6 +29,7 @@ pipeline {
                 echo "Owner of this job is: ${owner}"
                 echo "Owner email is: ${owner_email}"
                 sh 'mvn --version'
+                sh 'ls -lrth test/'
                 // Get some code from a GitHub repository
                 git 'https://github.com/jglick/simple-maven-project-with-tests.git'
 
