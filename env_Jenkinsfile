@@ -25,9 +25,9 @@ pipeline {
             steps {
                 sh 'mkdir test'
                 checkout([$class: 'GitSCM', branches: [[name: '*/main']], extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: 'test']], userRemoteConfigs: [[credentialsId: "$env.username", url: 'https://github.com/FlewBirds/eagle.git']]])
-                echo "you are in evironment: $evn.ENV"
-                echo "Owner of this job is: $env.owner"
-                echo "Owner email is: $env.owner_email"
+                echo "you are in evironment: $ENV"
+                echo "Owner of this job is: $owner"
+                echo "Owner email is: $owner_email"
                 sh 'mvn --version'
                 // Get some code from a GitHub repository
                 git 'https://github.com/jglick/simple-maven-project-with-tests.git'
