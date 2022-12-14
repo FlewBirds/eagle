@@ -16,7 +16,7 @@ pipeline {
     owner_email = "qa@org.com"
     username = credentials('FlewBirds') // credentials('credentials-id')
 }
-    timeout(unit: 'SECONDS', time: 40) {
+    
     stages {
         stage('Build') {
             agent { 
@@ -47,7 +47,7 @@ pipeline {
                     archiveArtifacts 'target/*.jar'
                 }
             }
-        }
+        
        
         stage('maven build on remote agent'){
           
