@@ -50,7 +50,7 @@ pipeline {
         }
        
         stage('maven build on remote agent'){
-           timeout(unit: 'SECONDS', time: 40) {
+          
             agent { 
              label 'linux'
              } 
@@ -74,7 +74,7 @@ pipeline {
                     archiveArtifacts 'target/*.jar'
                 }
             }
-        }
+        
  
     }
 }
