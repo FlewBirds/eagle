@@ -23,7 +23,7 @@ pipeline {
            // label 'linux'
            // } 
             steps {
-                sh 'mkdir test'
+                sh 'mkdir -p test'
                 checkout([$class: 'GitSCM', branches: [[name: '*/main']], extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: 'test']], userRemoteConfigs: [[credentialsId: "${username}", url: 'https://github.com/FlewBirds/eagle.git']]])
                 echo "you are in evironment: ${ENV}"
                 echo "Owner of this job is: ${owner}"
