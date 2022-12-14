@@ -1,19 +1,34 @@
 pipeline {
-   agent { docker { image 'maven:3.8.6-openjdk-11-slim' } }
+
+    agent {
+                docker {
+                    image 'maven:3.8.6-openjdk-11-slim' 
+                }
+         }
+
     tools {
         // Install the Maven version configured as "M3" and add it to the path.
         maven "M3"
     }
-
-environment {
+    environment {
     ENV = QA
     owner = qateam
     owner_email = qa@org.com
     username = credentials('FlewBirds') // credentials('credentials-id')
 }
+    timeout(unit: 'SECONDS', time: 40) {
     stages {
         stage('Build') {
+            agent { 
+            label 'linux'
+            } 
             steps {
+                sh 'mkdir test'
+                checkout([$class: 'GitSCM', branches: [[name: '*/main']], extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: 'test']], userRemoteConfigs: [[credentialsId: "$env.username", url: 'https://github.com/FlewBirds/eagle.git']]])
+                echo "you are in evironment: $evn.ENV"
+                echo "Owner of this job is: $env.owner"
+                echo "Owner email is: $env.owner_email"
+                sh 'mvn --version'
                 // Get some code from a GitHub repository
                 git 'https://github.com/jglick/simple-maven-project-with-tests.git'
 
@@ -23,8 +38,8 @@ environment {
                 // To run Maven on a Windows agent, use
                 // bat "mvn -Dmaven.test.failure.ignore=true clean package"
             }
-
-            post {
+        
+         post {
                 // If Maven was able to run the tests, even if some of the test
                 // failed, record the test results and archive the jar file.
                 success {
@@ -32,12 +47,13 @@ environment {
                     archiveArtifacts 'target/*.jar'
                 }
             }
-            
-                    stage('maven build on remote agent'){
-           // timeout(unit: 'SECONDS', time: 40) {
-            // agent { 
-            // label 'linux'
-            // } 
+        }
+       
+        stage('maven build on remote agent'){
+           timeout(unit: 'SECONDS', time: 40) {
+            agent { 
+             label 'linux'
+             } 
 
               steps {
                 // Get some code from a GitHub repository
@@ -59,9 +75,8 @@ environment {
                 }
             }
         }
-        }
-        
-        
-        
+ 
     }
+}
+}
 }
