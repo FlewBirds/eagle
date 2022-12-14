@@ -19,9 +19,9 @@ pipeline {
     
     stages {
         stage('Build') {
-            agent { 
-            label 'linux'
-            } 
+            // agent { 
+           // label 'linux'
+           // } 
             steps {
                 sh 'mkdir test'
                 checkout([$class: 'GitSCM', branches: [[name: '*/main']], extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: 'test']], userRemoteConfigs: [[credentialsId: "$env.username", url: 'https://github.com/FlewBirds/eagle.git']]])
@@ -52,9 +52,9 @@ pipeline {
        
         stage('maven build on remote agent'){
           
-            agent { 
-             label 'linux'
-             } 
+            // agent { 
+             // label 'linux'
+             // } 
 
               steps {
                 // Get some code from a GitHub repository
