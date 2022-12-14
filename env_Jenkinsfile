@@ -13,7 +13,7 @@ pipeline {
     environment {
     ENV = QA
     owner = qateam
-    owner_email = qa@org.com
+    owner_email = "qa@org.com"
     username = credentials('FlewBirds') // credentials('credentials-id')
 }
     timeout(unit: 'SECONDS', time: 40) {
