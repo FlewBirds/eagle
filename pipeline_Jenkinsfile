@@ -1,13 +1,8 @@
 pipeline {
 
-    agent {
-    label: linux
-                docker {
-                    image 'maven:3.8.6-openjdk-11-slim' 
-                }
-         }
-         triggers { cron('* 5 * * *') }
-         options { timeout(time: 5)}         
+    agent any
+         // triggers { cron('* 5 * * *') }
+         // options { timeout(time: 5)}         
          parameters {
 
         string(name: 'PERSON', defaultValue: 'Mr Jenkins', description: 'Who should I say hello to?')
