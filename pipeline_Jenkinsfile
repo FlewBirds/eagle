@@ -2,7 +2,8 @@ pipeline {
 
     agent any
          // triggers { cron('* 5 * * *') }
-         // options { timeout(time: 5)}         
+         // options { timeout(time: 5)}   
+         input {
          parameters {
 
         string(name: 'PERSON', defaultValue: 'Mr Jenkins', description: 'Who should I say hello to?')
@@ -16,7 +17,7 @@ pipeline {
         password(name: 'PASSWORD', defaultValue: 'SECRET', description: 'Enter a password')
    
          }
-         
+         }
              stages {
         stage('Example') {
             steps {
