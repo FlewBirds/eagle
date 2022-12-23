@@ -1,0 +1,150 @@
+//github token: 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
+pipeline {
+    //agent any //{
+  //label 'linux'
+  //}
+   /* 
+   environment
+   tools
+   options
+   triggers
+   parameters
+   libraries
+   */
+    agent {
+                docker {
+                    image 'maven:3.8.6-openjdk-11-slim' 
+                }
+    }
+
+
+    tools {
+        // Install the Maven version configured as "M3" and add it to the path.
+        maven "M3"
+    }
+    timeout(unit: 'SECONDS', time: 40) {
+    stages {
+        stage('Build') {
+            agent { 
+            label 'linux'
+            } 
+               /* 
+            environment
+            tools
+            options
+            triggers
+            parameters
+            libraries
+            */
+            steps {
+                // Get some code from a GitHub repository
+                git 'https://github.com/jglick/simple-maven-project-with-tests.git'
+
+                // Run Maven on a Unix agent.
+                sh "mvn -Dmaven.test.failure.ignore=true clean package"
+
+                // To run Maven on a Windows agent, use
+                // bat "mvn -Dmaven.test.failure.ignore=true clean package"
+            }
+        
+         post {
+                // If Maven was able to run the tests, even if some of the test
+                // failed, record the test results and archive the jar file.
+                success {
+                    junit '**/target/surefire-reports/TEST-*.xml'
+                    archiveArtifacts 'target/*.jar'
+                }
+            }
+        }
+       
+        stage('maven build on remote agent'){
+           // timeout(unit: 'SECONDS', time: 40) {
+            // agent { 
+            // label 'linux'
+            // } 
+
+              steps {
+                // Get some code from a GitHub repository
+                git 'https://github.com/jglick/simple-maven-project-with-tests.git'
+
+                // Run Maven on a Unix agent.
+                sh "mvn -Dmaven.test.failure.ignore=true clean package"
+
+                // To run Maven on a Windows agent, use
+                // bat "mvn -Dmaven.test.failure.ignore=true clean package"
+            }
+        
+            post {
+                // If Maven was able to run the tests, even if some of the test
+                // failed, record the test results and archive the jar file.
+                success {
+                    junit '**/target/surefire-reports/TEST-*.xml'
+                    archiveArtifacts 'target/*.jar'
+                }
+            }
+        }
+ 
+    }
+}
+}
+
+/*
+agent:
+    any
+    none - each stage has its own agent,
+    label 'label_name' - specific agent 
+
+agent Properties:
+     label,
+     cutomWorkspace "wordirectory path '/opt/maven_jobs/'"
+     docker: agent {docker java11-slimORalpine:tag }
+
+*/
+
+
+agent {
+    docker {
+        image "java-slim:version1.8"
+        label "linux"
+        args " -v /home/ec2/project_repo:/app/service/ -ENV environment:development"
+
+    }
+
+}
+
+agent {
+    dockerfile {
+
+    filenmae "path to dockerfile"
+    label "linux"
+    args " -v /home/ec2/project_repo:/app/service/ -ENV key:value"
+    }
+}
+
+environment {
+    ENV = QA
+    owner = qateam
+    owner_email = qa@org.com
+    username = credentials('FlewBirds') // credentials('credentials-id')
+}
+
+tools {
+
+    gradle: gradle3
+    maven maven3
+    agentjdk
+    git
+    docker
+    sonarqube
+}
+
+parameters {
+    string(name: 'maven', defaultValue: 'M3', description: 'version of maven we use is 3 by default')
+}
+
+tools {
+    maven "${params.maven}"
+}
+options {
+    
+}

@@ -10,7 +10,8 @@ $ansible localhost -m systemd -a "name=httpd state=started enabled=true" -b
 
 
 Filter data
-cat /etc/httpd/conf/httpd.conf | grep  -o '^[^#]*' | awk 'NF'
+cat /etc/httpd/conf/httpd.conf 
+f
 
 check syntax check
 [ec2-user@ip-10-0-19-79 conf]$ httpd -t
