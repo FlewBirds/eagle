@@ -20,4 +20,26 @@ Syntax OK
 $ansible localhost -m copy -a "src=/tmp/custom_httpd.conf dest=/etc/httpd/conf/httpd.conf backup=true mode='u=rwx,g=rx,o=r' owner=apache group=apache" -b
 
 
+environment - qa
+variable_file - qa2-config.yml
+
+mesos 
+    haproxy - yml
+    pgbouncer - yml
+    rsyslog - yml
+    filebeat - yml
+    mesos-slave - docker service #
+    docker 
+    docker - registry
+    /etc/hosts
+    logrotate
+    cronjobs - to cleanup jobs
+    docker iptables
+
+    blocks
+    
+zookeeper - jinja templates
+        zookeeper1,zookeeper2,zookeeper3
+
+
 

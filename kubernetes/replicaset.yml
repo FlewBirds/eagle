@@ -1,0 +1,15 @@
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: nginx-rs
+spec:
+  replicas: 4
+  selector:
+    app: nginx-rs
+    team: devops
+    spec:
+      containers:
+        - name: nginx-rs
+          image: nginx:1.14.2
+          ports:
+            - containerPort: 80

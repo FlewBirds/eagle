@@ -1,8 +1,15 @@
+Terraform commands
+
+terraform plan -out=s1.tfplan
+
 Terraform Datatypes
 
 string: alphanumeric, special characters
 bool: ture / flase
 number: numbers
+
+
+Collection types:
 object: key-value pairs
 map: dictionary
 list: array
@@ -30,6 +37,15 @@ variable vm_names {
 count = lenght(vm_names)
 
 count.index+1
+
+Variables:
+
+setting variable values:
+
+Files: terraform.tfvars, terraform.rfvars.json, *.auto.tfvars
+Environment Variables: export TF_VAR_aws_access_key=[ACCESS_KEY]
+Commandline: terraform plan -var aws_access_key=[ACCESS_KEY]
+
 
 
 

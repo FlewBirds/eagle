@@ -72,6 +72,11 @@ resource "azurerm_windows_virtual_machine" "eagle-tf-vm-w10" {
     sku       = "win10-21h2-pro"
     version   = "latest"
   }
+ depends_on = [
+    aws_iam_role_policy.example
+    azurerm_network_interface.eagle_tf_nic_internal
+  ]
+
 }
 
 
