@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: ReplicaSet        
+metadata:
+  name: fb-nginx-rs                  
+spec:
+  replicas: 3                   
+  selector:
+    matchLabels:                        
+      app: fb-nginx-rs             
+  template:                        
+    metadata:                      
+      labels:                      
+        app: fb-nginx-rs             
+    spec:                          
+      containers:                  
+      - name: fb-nginx-rs        
+        image: nginx:1.14.2        
+        ports:                     
+        - containerPort: 80
