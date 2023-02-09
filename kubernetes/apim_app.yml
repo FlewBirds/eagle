@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: func
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: func
+  template:
+    metadata:
+      labels:
+        app: func
+    spec:
+      containers:
+      - name: func
+        image: gbaeke/ingfunc
+        ports:
+        - containerPort: 80
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: func
+spec:
+  ports:
+  - port: 80
+    protocol: TCP
+    targetPort: 80
+  selector:
+    app: func
+  type: ClusterIP

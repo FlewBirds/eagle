@@ -1,0 +1,36 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: httpd-app
+  labels:
+    name: httpd-app
+spec:
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+          - matchExpressions:
+              - key: app_volume
+                operator: In
+                values:
+                - html
+  containers:
+  - name: apache
+    image: httpd
+    resources:
+      limits:
+        memory: "128Mi"
+        cpu: "500m"
+    ports:
+      - containerPort: 80
+    volumeMounts:
+      - mountPath: /var/www/html
+        name: html-data
+  volumes:
+    - name: html-data
+      hostPath:
+        path: /tmp
+        type: Directory
+
+# type supports: supported values: "", "BlockDevice", "CharDevice", "Directory", "DirectoryOrCreate", "File", "FileOrCreate", "Socket"
+

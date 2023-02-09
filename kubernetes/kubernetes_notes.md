@@ -35,7 +35,8 @@ continer port: 8000
 app service
 service port: 80
 
-cluster app endpoint:
+cluster aDathri@4102
+pp endpoint:
 hostport/nodeport/clusterip:31679
 
 Generate Manifest files from ad hoc commands
